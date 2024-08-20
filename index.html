@@ -134,6 +134,11 @@
             font-style: italic;
             display: none;
         }
+        .description{
+            color: white;
+            font-size: 10px;
+            margin-top: 20px;
+        }
         @media (max-width:1024px) {
             body{
                 padding: 10px;
@@ -151,6 +156,9 @@
             }
             .search input{
                 width: 100%;
+            }
+            .description{
+                margin-top: 10px;
             }
         }
 
@@ -181,26 +189,41 @@
                 document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
                 document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
                 document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+                const weatherIcon = document.querySelector(".weather-icon");
+                let descriptionText = '';
+                let descriptionElement = document.querySelector(".description");
     
                 if(data.weather[0].main == "Clouds"){
                     weatherIcon.src="./images/cloud icon.jpeg";
+                    descriptionText = 'The Weather is Cloudy';
+                    
                 }
                 else if(data.weather[0].main == "Clear"){
                     weatherIcon.src="./images/clear icon.png";
+                    descriptionText = 'The Weather is Clear';
                 }
                 else if(data.weather[0].main == "Rain"){
                     weatherIcon.src="./images/rain icon2.png";
+                    descriptionText = 'The Weather is Rainy';
                 }
                 else if(data.weather[0].main == "Drizzle"){
                     weatherIcon.src="./images/drizzle icon.jpeg";
+                    descriptionText = 'The Weather is Drizzly';
                 }
                 else if(data.weather[0].main == "Mist"){
                     weatherIcon.src="./images/mist icon.png";
+                    descriptionText = 'The Weather is Misty';
                 }
+                if (!descriptionElement) {
+                    descriptionElement = document.createElement('p');
+                    descriptionElement.classList.add('description');
+                    document.querySelector(".weather").appendChild(descriptionElement);
+                }
+                descriptionElement.innerText = descriptionText;
                 document.querySelector(".weather").style.display = "block";
                 document.querySelector(".error").style.display = "none";
-
             }
+
             //console.log(data);
         }
         searchBtn.addEventListener("click", ()=>{
